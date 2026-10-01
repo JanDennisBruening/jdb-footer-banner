@@ -1,30 +1,56 @@
 # Jan Footer-Popup
 
-Zentral gepflegtes Profilfenster für den Footer von Kundenwebsites.
+Version 1.1.0 · 1. Oktober 2026
 
-## Aktueller Stand
+Zentral gepflegtes Profilfenster für den Footer von Kundenwebsites. Die Gestaltung beruht auf der hochgeladenen Datei `Jan-Footer-Popup.html`; Dosis und Inter sowie die Schriftlizenzangaben sind weiterhin eingebettet.
 
-- `index.html` ist die unverändert übernommene Datei `Jan-Footer-Popup.html` vom 1. Oktober 2026.
-- Enthalten: Footer-Verweis, Dialog mit Leistungsbereichen und Kontaktlinks, mobile Gestaltung, gestaffelte Intro- und Outroanimationen sowie Berücksichtigung reduzierter Bewegung.
-- Dosis und Inter sind eingebettet; die Schriftlizenzangaben stehen in der HTML-Datei.
-- Kontaktziel: https://janbruening.de/ und digital@janbruening.de.
+## Einmalige Veröffentlichung
 
-## Vorschau und Einbindung
+Das Repository ist für statisches Hosting vorbereitet. Für GitHub Pages im Repository unter **Settings → Pages** einstellen:
 
-Die Datei ist derzeit eine eigenständige Vorschau mit Beispielseite und automatischer Öffnung am Ende des Dokuments. Das automatische Öffnen ist nur für die Vorschau vorgesehen.
+- Source: **Deploy from a branch**
+- Branch: **main**
+- Folder: **/(root)**
+- **Save**
 
-Das Repository speichert und versioniert den Entwurf. Eine zentrale Liveadresse, automatische Veröffentlichung und ein Einbindungsskript für Kundenwebsites sind noch nicht eingerichtet.
+Nach erfolgreicher Veröffentlichung lautet die Standardadresse:
 
-Vorgesehene nächste Umsetzung:
+https://jandennisbruening.github.io/jdb-footer-banner/
 
-1. Eine zentrale HTTPS-Adresse veröffentlicht die freigegebene Gestaltung aus diesem Repository.
-2. Ein kleiner Baustein auf der Kundenwebsite öffnet das Profilfenster erst nach Klick auf den Footer-Verweis.
-3. Das Profil wird als eigenständiges Dokument eingebettet, damit die Kundengestaltung den Fensterinhalt nicht verändert.
-4. Veröffentlichte Änderungen werden beim erneuten Laden übernommen; die Cache-Einstellungen werden dafür eingerichtet.
-5. Ein optionales WordPress-Plugin erleichtert die Installation desselben Bausteins.
+Die Aktivierung von GitHub Pages ist eine Einstellung des Repositorys; das Vorhandensein dieser Dateien aktiviert den Dienst noch nicht. Alternativ können dieselben Dateien auf einem eigenen HTTPS-Webspace liegen. Der Einbindungscode muss dann auf die dortige `embed.js` zeigen.
 
-Für die Produktion werden Beispielseite und automatische Vorschauöffnung durch den passenden Einbettungsmodus ersetzt. Die vorhandene Gestaltung bleibt die Grundlage.
+## Footer-Code
 
-## Änderungen
+```html
+<a href="https://janbruening.de/" data-jdb-footer>
+  Gestaltung &amp; Web: Jan Dennis Brüning
+</a>
+<script defer
+  src="https://jandennisbruening.github.io/jdb-footer-banner/embed.js">
+</script>
+```
 
-Weitere Entwürfe aktualisieren dieselbe Datei `index.html`. Die Git-Historie hält frühere Fassungen verfügbar. Erst eine erfolgreiche Veröffentlichung aktualisiert die zentrale Livefassung.
+Der Code liegt auch in `Einbindung.html`. Einmal im Footer jeder Kundenwebsite einfügen. In WordPress beispielsweise in einem HTML-Widget des Footer-Templates; JavaScript muss dort zugelassen sein. Der Linktext übernimmt die Kundengestaltung und kann angepasst werden. Das Popup verwendet die zentrale Gestaltung. Ein zusätzliches Plugin ist nicht erforderlich.
+
+## Verhalten
+
+- `index.html` ohne Einbettungsparameter zeigt die eigenständige Vorschau.
+- `embed.js` lädt das Profil erst nach Klick auf einen Link mit `data-jdb-footer` in einen abgeschotteten iframe. Die kleine JavaScript-Datei wird bereits mit der Kundenwebsite abgerufen.
+- Intro- und Outroanimationen bleiben erhalten; bei reduzierter Bewegung werden sie übersprungen.
+- Kreuz, Escape und Klick außerhalb des Profilfensters schließen es. Anschließend werden Fokus und Scrollverhalten wiederhergestellt.
+- Website und E-Mail bleiben https://janbruening.de/ und digital@janbruening.de.
+- Ohne JavaScript beziehungsweise ohne Dialogunterstützung bleibt der normale Link zur Website erhalten. Bei einem fehlgeschlagenen Abruf erscheint nach spätestens zwölf Sekunden ein Hinweis mit einem direkten Website-Link und einer Schließen-Schaltfläche.
+- Die Nachrichten zwischen Rahmen und Kundenwebsite werden über Absenderfenster und einen zufälligen Kanal geprüft. Der iframe hat durch die Sandbox einen opaken Ursprung.
+- Die Schriftdateien liegen im HTML; das Profil setzt selbst keine Tracking-Cookies. Der Hostinganbieter kann technisch notwendige Zugriffsdaten verarbeiten.
+
+## Zentrale Änderungen
+
+Gestaltung und Inhalte werden in `index.html` aktualisiert. GitHub Pages veröffentlicht Änderungen an `main`, sobald der Dienst eingerichtet ist und der Veröffentlichungsprozess erfolgreich läuft. Ein neues Öffnen lädt das Profil erneut mit einer neuen Abrufadresse. Bereits geöffnete Fenster werden nicht live verändert.
+
+GitHub nennt für die Veröffentlichung eine mögliche Wartezeit von bis zu zehn Minuten. Die Einbindungsdatei `embed.js` kann zusätzlich im Browser beziehungsweise beim Hostinganbieter zwischengespeichert werden. Änderungen am Einbindungsprotokoll müssen daher mit früheren Fassungen kompatibel bleiben.
+
+Beim Übernehmen einer neuen eigenständigen Gestaltung müssen der Einbettungsmodus im Dokumentkopf und die Nachrichtenverbindung am Dokumentende erhalten bleiben. Die Kundenwebsites brauchen für normale Inhalts- und Gestaltungsänderungen keine Anpassung.
+
+## Technische Voraussetzung
+
+Die Kundenwebsite muss das Laden der Einbindungsdatei und des iframe vom zentralen Hosting erlauben. Bei einer Content-Security-Policy betrifft das insbesondere `script-src` und `frame-src`. Das Profil benötigt kein WordPress-Backend und kann unter verschiedenen Website-Systemen eingesetzt werden.

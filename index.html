@@ -4,12 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Footer-Popup – Jan Dennis Brüning</title>
+  <script>
+    if (new URLSearchParams(location.search).get('embed') === '1' && window.parent !== window) {
+      document.documentElement.classList.add('jdbfp-embedded');
+    }
+  </script>
   <style>
     html,body{margin:0;min-height:100%;background:#e9e6df;color:#50606b;}
     body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;}
     .jdbfp-demo-stage{flex:1;display:grid;place-items:center;min-height:160px;padding:32px;font:14px/1.6 system-ui,sans-serif;text-align:center;}
     .jdbfp-demo-stage p{max-width:360px;margin:0;}
     .jdbfp-demo-footer{display:flex;justify-content:center;align-items:center;min-height:74px;padding:16px 24px;border-top:1px solid #d3d0ca;}
+    html.jdbfp-embedded, .jdbfp-embedded body{background:transparent;}
+    .jdbfp-embedded body{display:block;}
+    .jdbfp-embedded .jdbfp-demo-stage{display:none;}
+    .jdbfp-embedded .jdbfp-demo-footer{display:block;min-height:0;padding:0;border:0;}
+    .jdbfp-embedded .jdbfp-root .jdbfp-credit{display:none;}
   </style>
 <script type="text/plain" data-jdbfp-font-license>
 SCHRIFTEN: DOSIS UND INTER
@@ -561,7 +571,36 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 </script>
 
   </footer>
-  <!-- Nur in dieser eigenständigen Vorschau automatisch geöffnet. -->
-  <script>document.querySelector('[data-jdbfp-open]').click();</script>
+  <!-- Die Vorschau öffnet automatisch; die Einbettung wartet auf den Footer-Klick. -->
+  <script>
+  (() => {
+    const trigger = document.querySelector('[data-jdbfp-open]');
+    const dialog = document.querySelector('[data-jdbfp-dialog]');
+    if (!document.documentElement.classList.contains('jdbfp-embedded')) {
+      trigger.click();
+      return;
+    }
+    const channel = new URLSearchParams(location.search).get('channel');
+    if (!channel || !/^[a-zA-Z0-9_-]{12,80}$/.test(channel)) return;
+    let parentOrigin;
+    const send = (type) => {
+      if (parentOrigin) window.parent.postMessage({ namespace: 'jdb-footer-v1', channel, type }, parentOrigin);
+    };
+    window.addEventListener('message', (event) => {
+      if (event.source !== window.parent || !/^https?:\/\//.test(event.origin)) return;
+      const message = event.data;
+      if (!message || message.namespace !== 'jdb-footer-v1' || message.channel !== channel) return;
+      if (parentOrigin && event.origin !== parentOrigin) return;
+      if (message.type === 'init') {
+        parentOrigin = event.origin;
+        trigger.click();
+        if (dialog.open) send('ready');
+      } else if (message.type === 'request-close' && parentOrigin) {
+        document.querySelector('[data-jdbfp-close]').click();
+      }
+    });
+    dialog.addEventListener('close', () => send('closed'));
+  })();
+  </script>
 </body>
 </html>
