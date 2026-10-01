@@ -1,8 +1,8 @@
 # Jan Footer-Popup
 
-Version 1.1.0 · 1. Oktober 2026
+Version 1.2.0 · 1. Oktober 2026
 
-Zentral gepflegtes Profilfenster für den Footer von Kundenwebsites. Die Gestaltung beruht auf der hochgeladenen Datei `Jan-Footer-Popup.html`; Dosis und Inter sowie die Schriftlizenzangaben sind weiterhin eingebettet.
+Zentral gepflegtes Profilfenster von Jan Dennis Brüning für den Footer von Kundenwebsites.
 
 ## Einmalige Veröffentlichung
 
@@ -22,32 +22,32 @@ Die Aktivierung von GitHub Pages ist eine Einstellung des Repositorys; das Vorha
 ## Footer-Code
 
 ```html
-<a href="https://janbruening.de/" data-jdb-footer>
-  Gestaltung &amp; Web: Jan Dennis Brüning
-</a>
 <script defer
   src="https://jandennisbruening.github.io/jdb-footer-banner/embed.js">
 </script>
 ```
 
-Der Code liegt auch in `Einbindung.html`. Einmal im Footer jeder Kundenwebsite einfügen. In WordPress beispielsweise in einem HTML-Widget des Footer-Templates; JavaScript muss dort zugelassen sein. Der Linktext übernimmt die Kundengestaltung und kann angepasst werden. Das Popup verwendet die zentrale Gestaltung. Ein zusätzliches Plugin ist nicht erforderlich.
+Diese Skriptzeile einmal an der gewünschten Stelle im Footer einfügen. Sie erzeugt dort automatisch den anklickbaren Hinweis **„Gestaltung & Web: Jan Dennis Brüning“**. Ein zusätzliches HTML-Element oder Plugin ist nicht erforderlich. Der Hinweis übernimmt Schrift und Farbe seiner Umgebung; das Profilfenster verwendet die zentrale Gestaltung.
+
+Der Code liegt auch in `Einbindung.html`. In WordPress kann er beispielsweise in einem HTML-Widget des Footer-Templates stehen; JavaScript muss dort zugelassen sein.
+
+Bereits eingebundene Links mit `data-jdb-footer` werden weiterhin unterstützt. Wenn solche Links vorhanden sind, erzeugt das Skript keinen zusätzlichen Hinweis.
 
 ## Verhalten
 
 - `index.html` ohne Einbettungsparameter zeigt die eigenständige Vorschau.
-- `embed.js` lädt das Profil erst nach Klick auf einen Link mit `data-jdb-footer` in einen abgeschotteten iframe. Die kleine JavaScript-Datei wird bereits mit der Kundenwebsite abgerufen.
+- `embed.js` erzeugt den Footer-Hinweis und lädt das Profil erst nach dessen Anklicken in einen abgeschotteten iframe. Die kleine JavaScript-Datei wird bereits mit der Kundenwebsite abgerufen.
 - Intro- und Outroanimationen bleiben erhalten; bei reduzierter Bewegung werden sie übersprungen.
 - Kreuz, Escape und Klick außerhalb des Profilfensters schließen es. Anschließend werden Fokus und Scrollverhalten wiederhergestellt.
-- Website und E-Mail bleiben https://janbruening.de/ und digital@janbruening.de.
-- Ohne JavaScript beziehungsweise ohne Dialogunterstützung bleibt der normale Link zur Website erhalten. Bei einem fehlgeschlagenen Abruf erscheint nach spätestens zwölf Sekunden ein Hinweis mit einem direkten Website-Link und einer Schließen-Schaltfläche.
+- Ohne JavaScript oder bei einem fehlgeschlagenen Skriptabruf kann die reine Skripteinbindung keinen Hinweis erzeugen. Ohne Dialogunterstützung führt der erzeugte Hinweis direkt zur Website. Bereits separat angelegte Links funktionieren auch ohne JavaScript. Bei einem fehlgeschlagenen Profilabruf erscheint nach spätestens zwölf Sekunden ein Hinweis mit einem direkten Website-Link und einer Schließen-Schaltfläche.
 - Die Nachrichten zwischen Rahmen und Kundenwebsite werden über Absenderfenster und einen zufälligen Kanal geprüft. Der iframe hat durch die Sandbox einen opaken Ursprung.
-- Die Schriftdateien liegen im HTML; das Profil setzt selbst keine Tracking-Cookies. Der Hostinganbieter kann technisch notwendige Zugriffsdaten verarbeiten.
+- Dosis und Inter sowie ihre Schriftlizenzangaben sind im HTML eingebettet. Das Profil setzt selbst keine Tracking-Cookies. Der Hostinganbieter kann technisch notwendige Zugriffsdaten verarbeiten.
 
 ## Zentrale Änderungen
 
 Gestaltung und Inhalte werden in `index.html` aktualisiert. GitHub Pages veröffentlicht Änderungen an `main`, sobald der Dienst eingerichtet ist und der Veröffentlichungsprozess erfolgreich läuft. Ein neues Öffnen lädt das Profil erneut mit einer neuen Abrufadresse. Bereits geöffnete Fenster werden nicht live verändert.
 
-GitHub nennt für die Veröffentlichung eine mögliche Wartezeit von bis zu zehn Minuten. Die Einbindungsdatei `embed.js` kann zusätzlich im Browser beziehungsweise beim Hostinganbieter zwischengespeichert werden. Änderungen am Einbindungsprotokoll müssen daher mit früheren Fassungen kompatibel bleiben.
+Veröffentlichung und Zwischenspeicherung können die Auslieferung neuer Versionen verzögern. Änderungen am Einbindungsprotokoll müssen daher mit früheren Fassungen kompatibel bleiben.
 
 Beim Übernehmen einer neuen eigenständigen Gestaltung müssen der Einbettungsmodus im Dokumentkopf und die Nachrichtenverbindung am Dokumentende erhalten bleiben. Die Kundenwebsites brauchen für normale Inhalts- und Gestaltungsänderungen keine Anpassung.
 

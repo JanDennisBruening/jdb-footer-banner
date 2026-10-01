@@ -1,4 +1,4 @@
-/* Jan Dennis Brüning · Footer-Profil · Einbindung v1.1.0 */
+/* Jan Dennis Brüning · Footer-Profil · Einbindung v1.2.0 */
 (() => {
   'use strict';
   const script = document.currentScript;
@@ -133,6 +133,17 @@
   }
 
   function bind() {
+    if (!document.querySelector('a[data-jdb-footer]')) {
+      const credit = document.createElement('a');
+      credit.href = 'https://janbruening.de/';
+      credit.textContent = 'Gestaltung & Web: Jan Dennis Brüning';
+      credit.className = 'jdb-footer-credit';
+      credit.setAttribute('data-jdb-footer', '');
+      credit.style.color = 'inherit';
+      credit.style.font = 'inherit';
+      if (script.closest('body')) script.before(credit);
+      else (document.querySelector('footer') || document.body).append(credit);
+    }
     if (typeof HTMLDialogElement === 'undefined' || typeof HTMLDialogElement.prototype.showModal !== 'function') return;
     document.querySelectorAll('a[data-jdb-footer]').forEach((trigger) => {
       if (trigger.dataset.jdbFooterBound) return;
